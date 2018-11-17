@@ -1,5 +1,3 @@
-use std::ops;
-
 #[derive(Debug)]
 pub struct Vec2 {
     pub x: f64,

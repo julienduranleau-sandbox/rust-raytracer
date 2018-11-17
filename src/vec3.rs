@@ -1,6 +1,6 @@
 use std::ops;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Vec3 {
     pub x: f64,
     pub y: f64,
@@ -12,6 +12,29 @@ impl Vec3 {
         Vec3 { x, y, z }
     }
     
+    pub fn reflect(&self, normal: &Vec3) -> Vec3 {
+        self - &(normal * 2.0 * self.dot(normal))
+    }
+
+    pub fn refract(&self, normal: &Vec3, eta: f64) -> Vec3 {
+        let n_dot_i = normal.dot(self);
+        let k = 1.0 - eta * eta * (1.0 - n_dot_i * n_dot_i);
+
+        if k < 0.0 {
+            Vec3::new(0.0, 0.0, 0.0)
+        } else {
+            self * eta - normal * (eta * n_dot_i + k.sqrt()) 
+        }
+    }
+
+    pub fn mix(&self, other: &Vec3, ratio: f64) -> Vec3 {
+        Vec3::new(
+            self.x + (other.x - self.x) * ratio,
+            self.y + (other.y - self.y) * ratio,
+            self.z + (other.z - self.z) * ratio,
+        )
+    }
+
     pub fn mag(&self) -> f64 {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
@@ -180,6 +203,18 @@ impl<'a, 'b> ops::Mul<&'b Vec3> for &'a Vec3 {
 }
 
 impl ops::Mul<f64> for Vec3 {
+    type Output = Vec3;
+
+    fn mul(self, other: f64) -> Vec3 {
+        Vec3 {
+            x: self.x * other,
+            y: self.y * other,
+            z: self.z * other,
+        }
+    }
+}
+
+impl<'a> ops::Mul<f64> for &'a Vec3 {
     type Output = Vec3;
 
     fn mul(self, other: f64) -> Vec3 {
