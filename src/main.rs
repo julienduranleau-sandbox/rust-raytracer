@@ -378,9 +378,17 @@ fn trace_ray(initial_ray: Ray, scene: &Scene) -> Color {
         }
     }
 
+    // add contrast
+    final_color = (final_color - 0.5) * 1.20 + 0.5;
+
+    if final_color.x < 0.0 { final_color.x = 0.0; }
+    if final_color.y < 0.0 { final_color.y = 0.0; }
+    if final_color.z < 0.0 { final_color.z = 0.0; }
+
     if final_color.x > 1.0 { final_color.x = 1.0; }
     if final_color.y > 1.0 { final_color.y = 1.0; }
     if final_color.z > 1.0 { final_color.z = 1.0; }
+
 
     Color { r: final_color.x, g: final_color.y, b: final_color.z }
 }
