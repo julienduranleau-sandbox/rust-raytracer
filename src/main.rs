@@ -89,7 +89,7 @@ struct Plane {
 }
 
 fn main() {
-    let screen = Screen { width: 800, height: 600 };
+    let screen = Screen { width: 800 * 1, height: 600 * 1 };
 
     let origin = Vec3::new(0.0, -0.6, 2.0);
     let target = Vec3::new(0.0, 0.0, 0.0);
@@ -379,7 +379,7 @@ fn trace_ray(initial_ray: Ray, scene: &Scene) -> Color {
     }
 
     // add contrast
-    final_color = (final_color - 0.5) * 1.20 + 0.5;
+    final_color = (final_color - 0.5) * 1.10 + 0.5;
 
     if final_color.x < 0.0 { final_color.x = 0.0; }
     if final_color.y < 0.0 { final_color.y = 0.0; }
