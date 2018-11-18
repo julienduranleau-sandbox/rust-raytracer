@@ -4,4 +4,4 @@
 
 Dependencies: Rust, ppmtobmp (part of Netpbm)
 
-![](https://julienduranleau-sandbox.github.io/rust-raytracer/render.png "")
+![](https://raw.githubusercontent.com/julienduranleau-sandbox/rust-raytracer/master/render.png "")
